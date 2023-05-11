@@ -108,7 +108,7 @@ class Json extends JsonGeneralResponse
             }
         );
     }
-    public static function DbError(int $line = 0): void
+    public static function DbError(int|string  $line = 0): void
     {
         http_response_code(500);
         self::HeaderResponseJson([
