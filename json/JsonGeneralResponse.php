@@ -13,9 +13,9 @@ use Maatify\Functions\GeneralFunctions;
 abstract class JsonGeneralResponse extends FunJson
 {
 
-    public static function ErrorNoUpdate(int $line = 0): void
+    public static function ErrorNoUpdate(int|string $line = 0): void
     {
-        self::ErrorWithHeader400(40001, 'There is no date to update', (string)$line);
+        self::ErrorWithHeader400(40001, 'There is no date to update', $line);
     }
 
     public static function Unauthorized(string $line = ''): void
@@ -91,7 +91,7 @@ abstract class JsonGeneralResponse extends FunJson
         exit;
     }
 
-    public static function IncorrectCredentials(int $line = 0): void
+    public static function IncorrectCredentials(int|string $line = 0): void
     {
         self::ErrorWithHeader400(2025, 'credentials', 'Incorrect Credentials', line: $line ?: debug_backtrace()[0]['line']);
     }
@@ -101,7 +101,7 @@ abstract class JsonGeneralResponse extends FunJson
         self::HeaderResponseError(403022, 'Suspended Account' , line: $line ?: debug_backtrace()[0]['line']);
     }
 
-    public static function ApprovalPendingAccount(int $line = 0): void
+    public static function ApprovalPendingAccount(int|string $line = 0): void
     {
         self::HeaderResponseError(405022, 'Approval Pending Account' , line: $line ?: debug_backtrace()[0]['line']);
     }
@@ -111,7 +111,7 @@ abstract class JsonGeneralResponse extends FunJson
         self::ErrorWithHeader400(501601, 'phone', 'Already Verified');
     }
 
-    public static function EmailAlreadyVerified(int $line = 0): void
+    public static function EmailAlreadyVerified(int|string $line = 0): void
     {
         self::ErrorWithHeader400(503030, 'email', 'Email Already Verified' , line: $line ?: debug_backtrace()[0]['line']);
     }
@@ -126,12 +126,12 @@ abstract class JsonGeneralResponse extends FunJson
         self::ErrorWithHeader400(405015, 'device', 'Device Need Approve, Please Call Customer Support');
     }
 
-    public static function GoBackStep(string $description = 'Go Back', int $line = 0): void
+    public static function GoBackStep(string $description = 'Go Back', int|string $line = 0): void
     {
         self::ErrorWithHeader400(30400, '', $description, (string)$line);
     }
 
-    public static function TryAgain(int $line = 0): void
+    public static function TryAgain(int|string $line = 0): void
     {
         self::ErrorWithHeader400(30500, '', 'Please try again', line: $line ?: debug_backtrace()[0]['line']);
     }

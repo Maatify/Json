@@ -1,7 +1,7 @@
 {
     "name": "maatify/json",
     "description": "maatify.dev JSON handler, known by our team",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "type": "library",
     "keywords": [
         "PHP",
