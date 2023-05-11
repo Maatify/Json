@@ -8,6 +8,7 @@
 
 namespace Maatify\Json;
 
+use JetBrains\PhpStorm\NoReturn;
 use Maatify\Functions\GeneralFunctions;
 
 abstract class JsonGeneralResponse extends FunJson
@@ -23,6 +24,16 @@ abstract class JsonGeneralResponse extends FunJson
         header('HTTP/1.1 401 Unauthorized');
         header('Content-type: application/json; charset=utf-8');
         echo(json_encode(['line'=>$line],
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
+            | JSON_UNESCAPED_SLASHES));
+        exit;
+    }
+
+    public static function ServiceUnavailable(string $line = ''): void
+    {
+        header('HTTP/1.1 503 Unauthorized');
+        header('Content-type: application/json; charset=utf-8');
+        echo(json_encode(['line' => GeneralFunctions::CurrentPageError($line)],
             JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
             | JSON_UNESCAPED_SLASHES));
         exit;
