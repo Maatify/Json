@@ -78,6 +78,11 @@ class Json extends JsonGeneralResponse
         self::PostErrorHandler($varName, 7000, $moreInfo, $line);
     }
 
+    public static function InUse(string $varName, string $moreInfo = '', int|string $line = ''): void
+    {
+        self::PostErrorHandler($varName, 8000, $moreInfo, $line);
+    }
+
     public static function Success(array $result = [], string $description = '', string $more_info = '', int|string $line = ''): void
     {
         self::HeaderResponseJson([
@@ -122,6 +127,7 @@ class Json extends JsonGeneralResponse
                 5000 => '?? is Not verified',
                 6000 => '?? is Not exist',
                 7000 => '?? is Not Allowed To Use',
+                8000 => '?? In To Use',
                 default => '',
             }
         );
