@@ -126,7 +126,7 @@ abstract class FunJson
 
     public static function ErrorWithHeader400(int $responseCode,
         string $varName,
-        string $description = '',
+        array|string $description = '',
         string $moreInfo = '',
         int|string $line = ''
     ): void

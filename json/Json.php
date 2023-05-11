@@ -13,6 +13,24 @@ use Maatify\Functions\GeneralFunctions;
 
 class Json extends JsonGeneralResponse
 {
+
+    public static function Unexpected(
+        string $varName = '',
+        array|string $result = [],
+        string $moreInfo = '',
+        int|string $line = '',
+
+    ): void
+    {
+        self::ErrorWithHeader400(
+            9000,
+            $varName,
+            $result,
+            $moreInfo,
+            $line
+        );
+    }
+
     public static function Missing(
         string $varName,
         string $moreInfo = '',
