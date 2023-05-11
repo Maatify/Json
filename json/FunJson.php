@@ -41,7 +41,7 @@ abstract class FunJson
         Logger::RecordLog(['Response'    => $json_array,
                            'posted_data' => ($arr ?? ''),
                            'agent'       => $_SERVER['HTTP_USER_AGENT'],
-                           'ip'          => GeneralFunctions::IP(),
+                           'ip'          => $_SERVER['REMOTE_ADDR'] ?? '',
                            'real_ip'     => $_SERVER['REMOTE_ADDR'],
                            'forward_ip'  => ($_SERVER['HTTP_X_FORWARDED_FOR'] ??
                                              ''),
