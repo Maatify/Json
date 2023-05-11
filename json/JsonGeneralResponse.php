@@ -128,7 +128,7 @@ abstract class JsonGeneralResponse extends FunJson
 
     public static function InsufficientBalance(): void
     {
-        self::ErrorWithHeader400(405106, 'balance', 'Insufficient balance');
+        self::ErrorWithHeader400(405106, 'balance', 'Insufficient Balance');
     }
 
     public static function GoBackStep(string $description = 'Go Back', int|string $line = 0): void
