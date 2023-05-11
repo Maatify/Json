@@ -126,6 +126,11 @@ abstract class JsonGeneralResponse extends FunJson
         self::ErrorWithHeader400(405015, 'device', 'Device Need Approve, Please Call Customer Support');
     }
 
+    public static function InsufficientBalance(): void
+    {
+        self::ErrorWithHeader400(405106, 'balance', 'Insufficient balance');
+    }
+
     public static function GoBackStep(string $description = 'Go Back', int|string $line = 0): void
     {
         self::ErrorWithHeader400(30400, '', $description, (string)$line);
