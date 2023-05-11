@@ -38,12 +38,12 @@ abstract class JsonGeneralResponse extends FunJson
             line: $line);
     }
 
-    public static function GoToMethod(string $method, string $description = 'Go Back', string|array $more_info = '', int|string $line = 0): void
+    public static function GoToMethod(string $method, string $description = 'Go Back', string|array $more_info = '', int|string $line = 0, string $token = ''): void
     {
         self::HeaderResponseJson([
             'success'     => false,
             'response'    => 405000,
-            'result' => [],
+            'result' => ['token' => $token],
             'description' => $description,
             'more_info'   => $more_info,
             'action'   => $method,
