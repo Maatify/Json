@@ -38,6 +38,29 @@ abstract class FunJson
         if (isset($_POST['password']) & ! empty($_POST['password'])) {
             $arr['password'] = '*******';
         }
+
+        if (! empty($_POST['base64_file'])) {
+            if (base64_encode(base64_decode($_POST['base64_file'], true)) === $_POST['base64_file']) {
+                $arr['base64_file'] = 'Valid Base64';
+            } else {
+                $arr['base64_file'] = 'Not Valid Base64';
+            }
+        }
+        if (isset($json_array['result']['base64'])) {
+            unset($json_array['result']['base64']);
+        }
+
+        // Handle Logger APP Folder
+        $url = $_SERVER['REQUEST_URI'];
+        $url = ltrim($url, '/');
+        $urlParts = explode('/', $url);
+        $app_type = $urlParts[0] ?? '';
+        if(!empty($app_type) && $app_type == 'apps'){
+            $app_folder_logger = ($urlParts[0] ?? '') . '-' . ($urlParts[1] ?? '');
+        }else{
+            $app_folder_logger = $urlParts[0] ?? '';
+        }
+
         Logger::RecordLog(['Response'    => $json_array,
                            'posted_data' => ($arr ?? ''),
                            'agent'       => $_SERVER['HTTP_USER_AGENT'],
@@ -51,8 +74,10 @@ abstract class FunJson
                            'page'        => (basename($_SERVER['PHP_SELF']) ??
                                              ''),
         ],
-            'post/' . (basename($_SERVER["PHP_SELF"], '.php') ?? 'posted')
-            . '_response');
+            'post/' .
+            ($app_folder_logger ? $app_folder_logger . '/' : '') .
+            (basename($_SERVER["PHP_SELF"], '.php') ?? 'posted') .
+            '_response');
     }
 
 
