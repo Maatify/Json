@@ -152,9 +152,12 @@ abstract class JsonGeneralResponse extends FunJson
         self::ErrorWithHeader400(30500, '', 'Please try again', line: $line ?: debug_backtrace()[0]['line']);
     }
 
-    public static function captchaInvalid(array|string $description = '', int|string $line = 0): void
+    public static function captchaInvalid(array|string $description = '', string $more_info = '', int|string $line = 0): void
     {
-        self::ErrorWithHeader400(40002, 'captcha', $description, 'Invalid Validation', line: $line ?: debug_backtrace()[0]['line']);
+        if(empty($more_info)){
+            $more_info = 'Invalid Validation';
+        }
+        self::ErrorWithHeader400(40002, 'captcha', $description, $more_info, line: $line ?: debug_backtrace()[0]['line']);
 
     }
 }
