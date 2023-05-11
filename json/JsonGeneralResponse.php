@@ -31,7 +31,7 @@ abstract class JsonGeneralResponse extends FunJson
 
     public static function ServiceUnavailable(string $line = ''): void
     {
-        header('HTTP/1.1 503 Unauthorized');
+        header('HTTP/1.1 503 Maintenance');
         header('Content-type: application/json; charset=utf-8');
         echo(json_encode(['line' => GeneralFunctions::CurrentPageError($line)],
             JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
