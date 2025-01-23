@@ -160,7 +160,7 @@ abstract class JsonGeneralResponse extends FunJson
         self::ErrorWithHeader400(40002, 'captcha', $description, $more_info, line: $line ?: debug_backtrace()[0]['line']);
     }
 
-    public function PlatformNotAllowedToUse(string $description = '', int|string  $line = 0): void
+    public static function PlatformNotAllowedToUse(string $description = '', int|string  $line = 0): void
     {
         self::ErrorWithHeader400(7012, 'app_type_id', $description, line: $line ?: debug_backtrace()[0]['line']);
 
