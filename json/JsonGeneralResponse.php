@@ -16,7 +16,7 @@ abstract class JsonGeneralResponse extends FunJson
 
     public static function ErrorNoUpdate(int|string $line = 0): void
     {
-        self::ErrorWithHeader400(40001, 'There is no date to update', $line);
+        self::ErrorWithHeader400(40001, 'There is no date to update', line: $line);
     }
 
     public static function Unauthorized(string $line = ''): void
