@@ -165,4 +165,10 @@ abstract class JsonGeneralResponse extends FunJson
         self::ErrorWithHeader400(7012, 'app_type_id', $description, line: $line ?: debug_backtrace()[0]['line']);
 
     }
+
+    public static function OTPError(string $description = '', int|string  $line = 0): void
+    {
+        self::ErrorWithHeader400(4110, 'code', $description, line: $line ?: debug_backtrace()[0]['line']);
+
+    }
 }

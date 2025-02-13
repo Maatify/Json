@@ -128,6 +128,7 @@ class Json extends JsonGeneralResponse
                 6000 => '?? is Not exist',
                 7000 => '?? is Not Allowed To Use',
                 8000 => '?? In To Use',
+                9000 => '?? Unexpected',
                 default => '',
             }
         );
