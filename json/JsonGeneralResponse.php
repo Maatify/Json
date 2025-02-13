@@ -166,9 +166,9 @@ abstract class JsonGeneralResponse extends FunJson
 
     }
 
-    public static function OTPError(string $description = '', int|string  $line = 0): void
+    public static function OTPError(array|string $description = '', array|string $moreInfo = '', int|string  $line = 0): void
     {
-        self::ErrorWithHeader400(4110, 'code', $description, line: $line ?: debug_backtrace()[0]['line']);
+        self::ErrorWithHeader400(4110, 'code', $description, $moreInfo, line: $line ?: debug_backtrace()[0]['line']);
 
     }
 }
