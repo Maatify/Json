@@ -171,4 +171,10 @@ abstract class JsonGeneralResponse extends FunJson
         self::ErrorWithHeader400(4110, 'code', $description, $moreInfo, line: $line ?: debug_backtrace()[0]['line']);
 
     }
+
+    public static function CodeExpired(array|string $description = '', array|string $moreInfo = '', int|string  $line = 0): void
+    {
+        self::ErrorWithHeader400(401701, 'code', $description, $moreInfo, line: $line ?: debug_backtrace()[0]['line']);
+
+    }
 }
