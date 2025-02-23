@@ -39,13 +39,14 @@ abstract class JsonGeneralResponse extends FunJson
         exit;
     }
 
-    public static function ReLogin(int|string $line): void
+    public static function ReLogin(int|string $line, string|array $more_info = ''): void
     {
         if (session_status() == PHP_SESSION_ACTIVE) {
             session_destroy();
         }
         self::GoToMethod('Login',
             'Please Re-Login',
+            more_info: $more_info,
             line: $line);
     }
 
