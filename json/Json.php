@@ -9,16 +9,17 @@
 
 namespace Maatify\Json;
 
+use JetBrains\PhpStorm\NoReturn;
 use Maatify\Functions\GeneralFunctions;
 
 class Json extends JsonGeneralResponse
 {
 
-    public static function Unexpected(
+    #[NoReturn] public static function Unexpected(
         string $varName = '',
         array|string $result = [],
         string $moreInfo = '',
-        int|string $line = '',
+        int|string $line = ''
 
     ): void
     {
@@ -31,7 +32,7 @@ class Json extends JsonGeneralResponse
         );
     }
 
-    public static function Missing(
+    #[NoReturn] public static function Missing(
         string $varName,
         string $moreInfo = '',
         int|string $line = ''
@@ -40,7 +41,7 @@ class Json extends JsonGeneralResponse
         self::PostErrorHandler($varName, 1000, $moreInfo, $line);
     }
 
-    public static function Incorrect(
+    #[NoReturn] public static function Incorrect(
         string $varName,
         string $moreInfo = '',
         int|string $line = ''
@@ -49,12 +50,12 @@ class Json extends JsonGeneralResponse
         self::PostErrorHandler($varName, 2000, $moreInfo, $line);
     }
 
-    public static function Exist(string $varName, string $moreInfo = '',int|string $line = ''): void
+    #[NoReturn] public static function Exist(string $varName, string $moreInfo = '', int|string $line = ''): void
     {
         self::PostErrorHandler($varName, 3000, $moreInfo, $line);
     }
 
-    public static function Invalid(
+    #[NoReturn] public static function Invalid(
         string $varName,
         string $moreInfo = '',
         int|string $line = ''
@@ -63,39 +64,39 @@ class Json extends JsonGeneralResponse
         self::PostErrorHandler($varName, 4000, $moreInfo, $line);
     }
 
-    public static function NotVerified(string $varName, string $moreInfo = '', int|string $line = ''): void
+    #[NoReturn] public static function NotVerified(string $varName, string $moreInfo = '', int|string $line = ''): void
     {
         self::PostErrorHandler($varName, 5000, $moreInfo, $line);
     }
 
-    public static function NotExist(string $varName, string $moreInfo = '', int|string $line = ''): void
+    #[NoReturn] public static function NotExist(string $varName, string $moreInfo = '', int|string $line = ''): void
     {
         self::PostErrorHandler($varName, 6000, $moreInfo, $line);
     }
 
-    public static function NotAllowedToUse(string $varName, string $moreInfo = '', int|string $line = ''): void
+    #[NoReturn] public static function NotAllowedToUse(string $varName, string $moreInfo = '', int|string $line = ''): void
     {
         self::PostErrorHandler($varName, 7000, $moreInfo, $line);
     }
 
-    public static function InUse(string $varName, string $moreInfo = '', int|string $line = ''): void
+    #[NoReturn] public static function InUse(string $varName, string $moreInfo = '', int|string $line = ''): void
     {
         self::PostErrorHandler($varName, 8000, $moreInfo, $line);
     }
 
-    public static function Success(array $result = [], string $description = '', string $more_info = '', int|string $line = ''): void
+    #[NoReturn] public static function Success(array $result = [], string $description = '', string $more_info = '', int|string $line = ''): void
     {
         self::HeaderResponseJson([
-            'success'     => true,
-            'response'    => 200,
-            'result' => $result,
-            'description' => $description,
-            'more_info'   => $more_info,
-            'error_details'   => GeneralFunctions::CurrentPageError($line? : debug_backtrace()[0]['line']),
+            'success'       => true,
+            'response'      => 200,
+            'result'        => $result,
+            'description'   => $description,
+            'more_info'     => $more_info,
+            'error_details' => GeneralFunctions::CurrentPageError($line ? : debug_backtrace()[0]['line']),
         ]);
     }
 
-    private static function PostErrorHandler(
+    #[NoReturn] private static function PostErrorHandler(
         string $varName,
         int $CodeRange,
         string $moreInfo = '',
@@ -109,31 +110,30 @@ class Json extends JsonGeneralResponse
             $moreInfo,
             $line
         );
-
     }
 
     private static function ErrorDescription(
         string $varName,
         int $CodeRange
-    ): string {
-        return str_replace(
-            '??',
-            ucwords(str_replace('_', ' ', $varName), ' '),
-            match ($CodeRange) {
-                1000 => 'MISSING ??',
-                2000 => 'Incorrect ??',
-                3000 => '?? is already exist',
-                4000 => 'INVALID ??',
-                5000 => '?? is Not verified',
-                6000 => '?? is Not exist',
-                7000 => '?? is Not Allowed To Use',
-                8000 => '?? In To Use',
-                9000 => '?? Unexpected',
-                default => '',
-            }
-        );
+    ): string
+    {
+        $formattedVarName = ucwords(str_replace('_', ' ', $varName));
+
+        return match ($CodeRange) {
+            1000 => "MISSING $formattedVarName",
+            2000 => "Incorrect $formattedVarName",
+            3000 => "$formattedVarName is already exist",
+            4000 => "INVALID $formattedVarName",
+            5000 => "$formattedVarName is Not verified",
+            6000 => "$formattedVarName is Not exist",
+            7000 => "$formattedVarName is Not Allowed To Use",
+            8000 => "$formattedVarName In Use",
+            9000 => "$formattedVarName Unexpected",
+            default => '',
+        };
     }
-    public static function DbError(int|string  $line = 0): void
+
+    #[NoReturn] public static function DbError(int|string $line = 0): void
     {
         http_response_code(500);
         self::HeaderResponseJson([
