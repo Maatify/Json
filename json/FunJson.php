@@ -100,6 +100,10 @@ abstract class FunJson
             unset($arr['token']);
         }
 
+        foreach ($arr as $key => $value) {
+            $result[$key] = $value;
+        }
+
         self::HeaderResponseJson($result);
     }
 
