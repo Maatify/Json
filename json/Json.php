@@ -149,4 +149,19 @@ class Json extends JsonGeneralResponse
         return (string)str_replace(array("\r", "\n"), '', json_encode($array, JSON_UNESCAPED_UNICODE | JSON_HEX_APOS | JSON_UNESCAPED_SLASHES));
     }
 
+    #[NoReturn] public static function TooManyAttempts(string $varName = '',int $retry_after_seconds = 300,  int|string  $line = 0): void
+    {
+        http_response_code(429);
+        header('Content-Type: application/json');
+        header('Retry-After: ' . $retry_after_seconds); // Retry after 300 seconds
+        self::HeaderResponseJson([
+            'success'       => false,
+            'response'      => 429,
+            'var'           => $varName,
+            'description'   => 'Too Many Attempts',
+            'more_info'     => 'You have exceeded the number of allowed requests.',
+            'error_details' => GeneralFunctions::CurrentPageError($line),
+        ]);
+    }
+
 }
