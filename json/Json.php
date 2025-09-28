@@ -135,7 +135,9 @@ class Json extends JsonGeneralResponse
 
     #[NoReturn] public static function DbError(int|string $line = 0): void
     {
-        http_response_code(500);
+        if (!headers_sent()) {
+            http_response_code(500);
+        }
         self::HeaderResponseJson([
             'success'     => false,
             'response'    => 500,
@@ -151,9 +153,12 @@ class Json extends JsonGeneralResponse
 
     #[NoReturn] public static function TooManyAttempts(string $varName = '',int $retry_after_seconds = 300,  int|string  $line = 0): void
     {
-        http_response_code(429);
-        header('Content-Type: application/json');
-        header('Retry-After: ' . $retry_after_seconds); // Retry after 300 seconds
+        if (!headers_sent()) {
+            http_response_code(429);
+            header('Content-Type: application/json');
+            header('Retry-After: ' . $retry_after_seconds); // Retry after 300 seconds
+        }
+
         self::HeaderResponseJson([
             'success'       => false,
             'response'      => 429,

@@ -56,7 +56,7 @@ abstract class FunJson
             ? ($urlParts[0] . '-' . ($urlParts[1] ?? ''))
             : ($urlParts[0] ?? '');
 
-        Logger::RecordLog([
+        Logger::RecordLog(message: [
             'Response'    => $json_array,
             'posted_data' => $arr ?: '',
             'agent'       => $_SERVER['HTTP_USER_AGENT'] ?? '',
@@ -67,7 +67,7 @@ abstract class FunJson
             'referer'     => $_SERVER['HTTP_REFERER'] ?? '',
             'uri'         => $_SERVER['REQUEST_URI'] ?? '',
             'page'        => basename($_SERVER['PHP_SELF']) ?? '',
-        ], 'post/' . ($app_folder_logger ? "$app_folder_logger/" : '') . (basename($_SERVER["PHP_SELF"], '.php') ?? 'posted') . '_response');
+        ], logFile: 'post/' . ($app_folder_logger ? "$app_folder_logger/" : '') . (basename($_SERVER["PHP_SELF"], '.php') ?? 'posted') . '_response');
     }
 
     #[NoReturn] public static function HeaderError($line = ''): void
@@ -112,7 +112,10 @@ abstract class FunJson
         if (! empty($_ENV['JSON_POST_LOG'])) {
             self::LoggerResponseAndPost($json_array);
         }
-        header('Content-type: application/json; charset=utf-8');
+        if (!headers_sent()) {
+            header('Content-type: application/json; charset=utf-8');
+        }
+
         echo json_encode($json_array, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         exit();
     }
@@ -124,7 +127,9 @@ abstract class FunJson
         int|string $line = ''
     ): void
     {
-        http_response_code(400);
+        if (!headers_sent()) {
+            http_response_code(400);
+        }
         self::HeaderResponseJson([
             'success'       => false,
             'response'      => $responseCode,
