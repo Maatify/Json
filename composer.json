@@ -39,7 +39,7 @@
     ],
     "require": {
         "maatify/functions": "^5.0",
-        "maatify/logger": "^5.0"
+        "maatify/logger": "^5.0 || ^7.0"
     },
     "autoload": {
         "psr-4": {

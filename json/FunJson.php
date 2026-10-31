@@ -21,7 +21,7 @@ abstract class FunJson
         if (! empty($_POST['password'])) {
             $arr['password'] = '*********';
         }
-        Logger::RecordLog(['posted_data' => ($arr ?? ''),
+        Logger::RecordLog(message: ['posted_data' => ($arr ?? ''),
                            'agent'       => ($_SERVER['HTTP_USER_AGENT']) ?? '',
                            'ip'          => $_SERVER['REMOTE_ADDR'] ?? '',
                            'forward_ip'  => ($_SERVER['HTTP_X_FORWARDED_FOR'] ??
@@ -31,7 +31,7 @@ abstract class FunJson
                            'uri'         => ($_SERVER['REQUEST_URI'] ?? ''),
                            'page'        => (basename($_SERVER['PHP_SELF']) ??
                                              ''),
-        ], 'post/' . (basename($_SERVER["PHP_SELF"], '.php') ?? 'posted'));
+        ], logFile: 'post/' . (basename($_SERVER["PHP_SELF"], '.php') ?? 'posted'));
     }
 
     public static function LoggerResponseAndPost(array $json_array): void
